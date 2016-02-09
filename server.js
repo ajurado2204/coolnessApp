@@ -14,9 +14,25 @@ var connection = mysql.createConnection({
 });
 
 
-
+connection.connect();
 app.get("/coolness-chart",function(req, res){
 
+  var query = "SELECT name,coolness_points FROM cast_table ORDER BY coolness_points DESC;";
+  connection.query(query,function(err, rows, fields){
+
+    if(err){
+      res.status("404").send("No data.");
+    }
+
+    var obj = {};
+    for(var i = 0; i < rows.length; i++){
+
+      obj.i = {name:rows[i].name,coolness_points:rows[i].coolness_points};
+    }
+
+    res.send(JSON.stringify(obj));
+
+  });
 
 });
 
