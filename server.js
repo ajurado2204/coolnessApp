@@ -17,7 +17,7 @@ var connection = mysql.createConnection({
 connection.connect();
 
 app.get('/cast', function(res, req){
-  connection.query("SELECT name FROM cast_table ORDER BY id ASC", function(err, result) {
+  connection.query("SELECT id, name FROM cast_table ORDER BY id ASC", function(err, result) {
     res.send(result);
   });
 });
