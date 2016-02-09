@@ -14,6 +14,13 @@ var connection = mysql.createConnection({
 });
 
 
+
+app.get("/coolness-chart",function(req, res){
+
+
+});
+
+
 app.listen(port, function(){
   console.log("Listening");
 });
