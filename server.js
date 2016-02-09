@@ -8,26 +8,26 @@ var port = 8080;
 
 var connection = mysql.createConnection({
   host     : 'localhost',
-  user     : 'me',
-  password : 'secret',
-  database : 'my_db'
+  user     : 'root',
+  password : '',
+  database : 'coolnessdb'
 });
 
 
 connection.connect();
 
-app.get('/cast', function(res, req){
+app.get('/cast', function(req, res){
   connection.query("SELECT id, name FROM cast_table ORDER BY id ASC", function(err, result) {
     res.send(result);
   });
 });
 
-app.get('/attitude-chart/:type' , function(res,req){
+app.get('/attitude-chart/:type' , function(req,res){
   var type = req.params.type;
   connection.query("SELECT name FROM cast_table WHERE attitude = ?",type, function(err,result){
     res.send(result);
   });
-})
+});
 
 app.get("/coolness-chart",function(req, res){
 
@@ -38,13 +38,7 @@ app.get("/coolness-chart",function(req, res){
       res.status("404").send("No data.");
     }
 
-    var obj = {};
-    for(var i = 0; i < rows.length; i++){
-
-      obj.i = {name:rows[i].name,coolness_points:rows[i].coolness_points};
-    }
-
-    res.send(JSON.stringify(obj));
+    res.send(JSON.stringify(rows));
 
   });
 
